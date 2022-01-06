@@ -9,19 +9,19 @@ phases:
       - aws ecr get-login-password --region ap-south-1
       - docker login --username sivadev9848 --password siva@9848
       - REPOSITORY_URI=129376150219.dkr.ecr.ap-south-1.amazonaws.com/nodejsapp
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+      #COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      #IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:129376150219.dkr.ecr.ap-south-1.amazonaws.com/nodejsapp:latest
+      - docker tag $REPOSITORY_URI:latest 129376150219.dkr.ecr.ap-south-1.amazonaws.com/nodejsapp
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push 129376150219.dkr.ecr.ap-south-1.amazonaws.com/nodejsapp:latest
+      - docker push 129376150219.dkr.ecr.ap-south-1.amazonaws.com/nodejsapp
       #docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"nodejsapp","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
