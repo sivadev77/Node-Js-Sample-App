@@ -15,7 +15,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:129376150219.dkr.ecr.ap-south-1.amazonaws.com/nodejsapp:latest
+      - docker tag $REPOSITORY_URI:129376150219.dkr.ecr.ap-south-1.amazonaws.com/nodejsapp
   post_build:
     commands:
       - echo Build completed on `date`
